@@ -6,12 +6,11 @@ See LICENSE for details
 """
 from karapace.config import set_config_defaults
 from karapace.master_coordinator import MasterCoordinator
-from tests.utils import KafkaConfig, REGISTRY_URI, REST_URI
+from tests.utils import KafkaConfig, new_random_name, REGISTRY_URI, REST_URI
 from typing import Optional
 
 import asyncio
 import json
-import os
 import pytest
 import requests
 import time
@@ -88,7 +87,7 @@ async def test_schema_request_forwarding(registry_async_pair):
     master_url, slave_url = registry_async_pair
     max_tries, counter = 5, 0
     wait_time = 0.5
-    subject = os.urandom(16).hex()
+    subject = new_random_name("subject")
     schema = {"type": "string"}
     other_schema = {"type": "int"}
     # Config updates
